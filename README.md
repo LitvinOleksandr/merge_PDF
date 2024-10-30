@@ -5,7 +5,7 @@ Markdown
 This Python script simplifies the task of merging multiple PDF files into a single document.
 
 **Usage:**
-1. **Installation:** Ensure you have Python installed. Install the required library using `pip install PyPDF2`.
+1. **Installation:** Ensure you have Python installed. Install the required library using 'pip install -r requirements.txt'
 2. **Execution:** Run the script. A window will appear.
 3. **File Selection:** Click the button to choose the PDF files you want to merge.
 4. **Output File:** Specify the desired name for the combined PDF.
