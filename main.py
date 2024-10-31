@@ -1,6 +1,6 @@
 import PyPDF2
 import tkinter as tk
-from tkinter import filedialog, messagebox
+from tkinter import filedialog, messagebox, simpledialog
 
 def merge_pdfs(pdf_list, output):
     pdf_writer = PyPDF2.PdfWriter()
@@ -20,9 +20,25 @@ def select_files():
 def save_file():
     return filedialog.asksaveasfilename(defaultextension=".pdf", filetypes=[("PDF files", "*.pdf")])
 
+def reorder_files(files):
+    reordered_files = files[:]
+    for i, file in enumerate(files):
+        new_position = simpledialog.askinteger(
+            "Порядок файлов",
+            f"Текущая позиция файла '{file}' - {i + 1}. Введите новую позицию:",
+            initialvalue=i + 1,
+            minvalue=1,
+            maxvalue=len(files)
+        )
+        if new_position is not None and 1 <= new_position <= len(files):
+            # Перемещаем файл на новую позицию
+            reordered_files.insert(new_position - 1, reordered_files.pop(i))
+    return reordered_files
+
 def merge_files():
     pdf_files = select_files()
     if pdf_files:
+        pdf_files = reorder_files(pdf_files)  # Добавляем возможность поменять порядок
         output_file = save_file()
         if output_file:
             merge_pdfs(pdf_files, output_file)
