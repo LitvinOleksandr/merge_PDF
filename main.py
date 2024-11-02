@@ -20,6 +20,13 @@ def select_files():
 def save_file():
     return filedialog.asksaveasfilename(defaultextension=".pdf", filetypes=[("PDF files", "*.pdf")])
 
+def show_selected_files(files):
+    preview = tk.Toplevel()
+    preview.title("Выбранные PDF файлы")
+    for file in files:
+        tk.Label(preview, text=file).pack()
+    tk.Button(preview, text="ОК", command=preview.destroy).pack(pady=10)
+
 def reorder_files(files):
     reordered_files = files[:]
     for i, file in enumerate(files):
@@ -41,6 +48,7 @@ def merge_files():
         pdf_files = reorder_files(pdf_files)  # Добавляем возможность поменять порядок
         output_file = save_file()
         if output_file:
+            show_selected_files(pdf_files)
             merge_pdfs(pdf_files, output_file)
             messagebox.showinfo("Успех", f"PDF файлы успешно объединены в {output_file}")
         else:
